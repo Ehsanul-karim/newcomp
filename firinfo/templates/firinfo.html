@@ -1,0 +1,375 @@
+{% extends "user_base.html" %}
+{% load static %}
+{% block ProfilerType %}Admin{% endblock %}
+    {% block Pagetitle %}Dashboard{% endblock %}
+
+    {% block dashboard_active %} {% endblock %}
+
+    {% block sidebar_item2 %}New Arrest{% endblock %}
+    {% block sidebar_item3 %}Criminal Records{% endblock %}
+    {% block sidebar_item4 %}Approve Applications{% endblock %}
+    {% block UserDetails %}
+    <i class="fa fa-user me-sm-1"></i>
+    <span class="d-sm-inline d-none">Admin</span>
+    {% endblock %}
+    {% block sidevar_1 %}
+    {% url 'AdminHomePage' user.id %}
+    {% endblock %}
+    {% block sidevar_2 %}
+    {% url 'ArrestPage' user.id %}
+    {% endblock %}
+    {% block sidevar_3 %}
+    {% url 'CriminalPage' user.id %}
+    {% endblock %}
+
+    {% block content %}
+    <div class="container-fluid py-4">
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-header pb-0">
+                        <h6>FIR INFO</h6>
+                    </div>
+                    <div id="uploadForm">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <h1>Victim's Info</h1>
+                                    <div class="row" style="margin: auto;"  id="User_box">
+                                            <label for="User" class="form-label">FIR ID</label>
+                                            <input style="background: #f0f0f2;" type="text" class="form-control" name="User" id="User" autocomplete="off" value="{{ case_info.id }}" disabled>
+                                    </div>
+                                    <div class="row" style="margin: auto;"  id="Victim_box">
+                                            <label for="VICTIMID" class="form-label">Victim ID</label>
+                                            <input style="background: #f0f0f2;" type="text" class="form-control" name="VICTIMID" id="VICTIMID" autocomplete="off" value="{{ victim_infos.id }}">
+                                    </div>                                                
+                                </div>
+                                <div class="col-md-8" style="text-align: center;">
+                                        <div id="imageContainer" style="cursor: pointer; text-align: center;">
+                                            {% if victim.profile_image %}
+                                                <img width="100px" src="{{ victim.profile_image.url }}" id="imgview5" style="border: 1px dotted #1c2247; margin-right: 150px;" />
+                                            {% else %}
+                                                <img width="100px" src="{% static 'images/logo/—Pngtree—vector add icon_4232053.png' %}" id="imgview5" style="border: 1px dotted #1c2247; margin-right: 150px;" />
+                                            {% endif %}
+                                            <!-- <img width="100px" src="{% static 'images/logo/—Pngtree—vector add icon_4232053.png' %}" id="imgview5" style="border: 1px dotted #1c2247; margin-right: 150px;" /> -->
+                                            <input class="form-control" type="file" name="victimImage" id="FileUpload10" onchange="readURL(this, 'imgview5');" style="display: none;">
+                                            <br>
+                                            <label for="FileUpload1" class="form-label" style="margin-right: 150px;">Photo of victim</label>
+                                        </div>
+                                </div>
+                            </div>
+                    
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3" id="victim_name">
+                                        <label for="victimName" class="form-label" style="width: 150px;">Victim's Name</label>
+                                        <input type="text" class="form-control"  id="victimName" name="victimName" value="{{ victim_infos.name }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3" id="victim_fathername" >
+                                        <label for="address" class="form-label" style="width: 200px;">Father Name</label>
+                                        <input type="text"  class="form-control"  id="fathername" name="Fathername" value="{{ victim_infos.fathername }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="mb-3" id="victim_ssn" >
+                                        <label for="ssn" class="form-label">NID</label>
+                                        <input type="text" class="form-control" id="ssn" name="ssn" min="1" value="{{ victim_infos.nid }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="mb-3" id="victim_age"  >
+                                        <label for="age" class="form-label">Age</label>
+                                        <input type="text"  class="form-control" id="age" name="age" min="1" value="{{ victim_infos.age }}">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="victim_address">
+                                <div class="col-md-12">
+                                    <label for="mobile" class="form-label">Division</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" value="{{ victim_infos.division }}">
+                                </div>
+                                <div class="col-md-12">
+                                    <label for="mobile" class="form-label">District</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" value="{{ victim_infos.district }}">
+                                </div>
+                                <div class="col-md-0">
+                                    <label for="mobile" class="form-label">Thana</label>
+                                </div>
+                                <div class="col-md-4">
+                                    <input type="text" class="form-control" value="{{ victim_infos.upazila }}">
+                                </div>
+                              </div>
+                              <div class="row" style="margin-top: 10px;">
+                                <div class="col-md-3">
+                                    <div class="mb-3" id="victim_mail">
+                                        <label for="email" class="form-label">Email ID</label>
+                                        <input type="email" class="form-control" id="email" name="email" value="{{ victim_infos.email }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="mb-3" id="victim_phn">
+                                        <label for="mobile" class="form-label">Mobile No</label>
+                                        <div class="input-group">
+                                            <div class="input-group-text">+880</div>
+                                            <input type="text"  class="form-control" id="mobile" maxlength="10" name="mobile" value="{{ victim_infos.phone }}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>                            
+                        </div>
+                    </div>
+                    <!-- looping through witness database -->
+                    <!-- <div>
+                        <div class="container">
+                            <div class="row" id="witnessCard">
+                                <div class="card witness-section">
+                                    <div class="row">
+                                        <div class="col-md-12" style="text-align: center;">
+                                            <label style=" font-size: large;">Withness no <span>1</span></label>
+                                            <button id="closeBTN" type="button" class="btn-close close-witness-btn" aria-label="Close"
+                                                style="float: inline-end;"></button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label for="Name_clone_1" class="form-label">Name</label>
+                                                <input type="text" class="form-control" id="Name_clone_1" name="Name_clone_1" value="{{ witness_infos.name }}" >
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="mb-3">
+                                                <label for="mobile_clone_1" class="form-label">Mobile No</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-text">+880</div>
+                                                    <input type="text" class="form-control" maxlength="10" id="mobile_clone_1" name="mobile_clone_1" value="{{ witness_infos.phone }}" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="mb-3">
+                                                <label for="ssn_clone_1" class="form-label">Identification No</label>
+                                                <input type="text" class="form-control" maxlength="15" id="ssn_clone_1" name="ssn_clone_1" value="{{ witness_infos.nid }}"  >
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="row mb-3">
+                                                <div class="col-md-6" id="useridDIV" style="display: none;">
+                                                    <label for="User_clone_1" class="form-label">User ID</label>
+                                                    <input type="number" class="form-control" id="User_clone_1" name="User_clone_1" value="{{ witness_infos.user_id.id }}" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <textarea class="form-control" name="detailsDisguis" id="Brief_clone_1" placeholder="Statement of the witness" rows="3" value="{{ witness_infos.brief }}" ></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" id="addbuttondiv" style="display: none;">
+                                <div class="col-md-10"></div>
+                                <div class="col-md-2">
+                                    <button type="submit" id="addWitness" class="form-control btn btn-outline-secondary"
+                                        style="margin-bottom: auto; margin-top: 10px;">Add another</button>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="text" class="form-control" value="{{ FIR_ID }}" id="hiddenFIR" name="hiddenFir" style="display: none;">
+                    </div> -->
+
+                    <!-- case description part -->
+                    <div>
+                        <h1>Crime Info</h1>
+                          <div class="container">
+                              <div class="row">
+                                  <div class="col-md-3">
+                                      <div class="mb-3">
+                                        <label for="address" class="form-label">Crime Type</label>
+                                        <input type="text" class="form-control" value="{{ case_info.crime_type.crime_name }}">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-3">
+                                      <div class="mb-3">
+                                          <label for="date" class="form-label">Occurance date</label>
+                                          <input type="date" class="form-control" name="date" id="date" value="{{ case_info.occurance_date|date:'Y-m-d' }}">
+                                      </div>
+                                  </div>
+                                  <div class="col-md-2">
+                                      <div class="mb-3">
+                                        <label for="time" class="form-label">Time of incident</label>
+                                        <input type="time" class="form-control" value="{{ case_info.occurance_time }}">
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-12">
+                                      <label for="mobile" class="form-label">Division</label>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <input type="text" class="form-control">
+                                  </div>
+                                    <div class="col-md-12">
+                                        <label for="mobile" class="form-label">District</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <input type="text" class="form-control">
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label for="mobile" class="form-label">Thana</label>
+                                    </div>
+                                    <div class="col-md-4">
+                                      <input type="text" class="form-control">
+                                    </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col-md-5">
+                                      <div class="mb-3">
+                                          <label for="floatingTextarea2" class="form-label" style="margin-top: 10px;" >Brief the occurance</label>
+                                          <div class="form-floating">
+                                              <textarea class="form-control" placeholder="Brief the eventflow of occurance" name="brief" id="floatingTextarea2" style="height: 80px;">{% if Case_details.brief %} {{ Case_details.brief }} {% endif %}</textarea>
+                                              <label for="floatingTextarea2">Details</label>
+                                            </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-md-5">
+                                      <div class="mb-3">
+                                          <label for="floatingTextarea3" class="form-label" style="margin-top: 10px;" >Description of Stolen or Damaged Property (If applicable)</label>
+                                          <div class="form-floating">
+                                              <textarea class="form-control" placeholder="Brief the eventflow of occurance" name="brief_metal" id="floatingTextarea3" style="height: 80px;">{% if Case_details.brief_material %} {{ Case_details.brief_material }} {% endif %}</textarea>
+                                              <label for="floatingTextarea2">Details</label>
+                                            </div>
+                                      </div>
+                                  </div>
+                              </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Suspect information -->
+                    <div>
+                        <div class="container">
+                            <div class="row" id="suspectCard">
+                                <div class="card criminal-section">
+                                    <div class="row">
+                                        <div class="col-md-12" style="text-align: center;">
+                                            <label style=" font-size: large;">Suspect no <span>1</span></label>
+                                            <button id="closeBTN" type="button" class="btn-close close-witness-btn" aria-label="Close"
+                                                style="float: inline-end;"></button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="mb-3">
+                                                <label for="susName1" class="form-label">Name of Offender (if known or heard)</label>
+                                                <input type="text" class="form-control" id="susName1" name="susName1"
+                                                    placeholder="Suspect Name">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <h5>Physical Description</h5>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-3">
+                                            <label for="susage1" class="form-label">Age</label>
+                                            <input type="text" class="form-control" disabled value="{{ physical_structure_infos.age }}" >
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="susweight1" class="form-label">Weight</label>
+                                            <input type="text" class="form-control" disabled value="{{ physical_structure_infos.weight }}">
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="susheight1" class="form-label">Height</label>
+                                            <input type="text" class="form-control" disabled value="{{ physical_structure_infos.height }}">
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-3">
+                                            <label for="mobile" class="form-label">Gender</label>
+                                            <input type="text" class="form-control" disabled value="{{ physical_structure_infos.gender }}">
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="mobile" class="form-label">Facial Hair</label>
+                                            <input type="text" class="form-control" disabled value="{{ physical_structure_infos.facialHair }}">
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="mobile" class="form-label">Face Shape</label>
+                                            <input type="text" class="form-control" disabled value="{{ physical_structure_infos.faceShape }}" >
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-3">
+                                            <label for="mobile" class="form-label">Hair Length</label>
+                                            <input type="text" class="form-control" disabled value="{{ physical_structure_infos.hairLength }}" >
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="mobile" class="form-label">Hair Style</label>
+                                            <input type="text" class="form-control" disabled value="{{ physical_structure_infos.hairStyle }}" >
+                                        </div>
+                                        <div class="col-3">
+                                            <label for="mobile" class="form-label">Hair Color</label>
+                                            <input type="text" class="form-control" disabled value="{{ physical_structure_infos.hairColor }}" >
+                                        </div>
+                                    </div>
+                                    <!-- Example single danger button -->
+                                    <div class="row mt-3 mb-3">
+                                        <label for="customRange2" class="form-label">Skin Tone</label>
+                                        <input style="width: 200px; margin-left:15px" type="text" class="form-control" disabled value="{{ physical_structure_infos.skinTone }}" >
+                                    </div>
+                    
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="row" style="margin: 10px;">
+                                                <label for="customRange2" class="form-label">Distinguished Marks</label>
+                                                <input type="text" class="form-control">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-5">
+                                            <div class="form-group">
+                                                <textarea class="form-control" name="detailsDisguis1" id="Description_distinguishing_marks1"
+                                                    placeholder="Description of the mark" rows="3" disabled value="{{ physical_structure_infos.dis_guis_mark_brief }}" ></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END -->
+
+                        <!-- next start the picture of the criminal -->
+                        <form method="post"  enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row d-flex justify-content-center">
+                                <div class="col text-center">
+                                    <button type="submit" name="action" value="accept" class="btn btn-success">
+                                        Accept
+                                    </button>
+                                </div>
+                                <div class="col text-center">
+                                    <button type="submit" name="action" value="reject" class="btn btn-danger">
+                                        Reject
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                                               
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}

@@ -1,0 +1,269 @@
+{% extends "user_base.html" %}
+{% load static %}
+  
+  {% block title %}Criminal Identification System{% endblock %}
+
+  {% block head %}
+  <style>
+    .modal-sp{
+      width: 80%; 
+      height: 70%;
+    }
+    .dataTables_paginate span
+    {
+      padding: 50px;
+    }
+  </style>
+  {% endblock %}
+
+  {% block ProfilerType %}Admin{% endblock %}
+    {% block Pagetitle %}Dashboard{% endblock %}
+
+    {% block item_3 %}active{% endblock %}
+
+    {% block sidebar_item2 %}New Arrest{% endblock %}
+    {% block sidevar_1 %}
+    {% url 'AdminHomePage' user.id %}
+    {% endblock %}
+    {% block sidevar_2 %}
+    {% url 'ArrestPage' user.id %}
+    {% endblock %}
+    {% block sidebar_item3 %}Criminal Records{% endblock %}
+    {% block sidebar_item4 %}Approve Applications{% endblock %}
+    {% block sidebar_item5_details %}          
+    {% endblock %}
+
+    {% block login-modelss %}
+    <div class="modal-sp">
+        <div class="top-form-sp">
+          <div class="criminal" style="position: relative; left: -75%;">
+            <label style="font-size: medium;">Criminal ID: <span style="font-weight: 400;">#20231014001</span></label>
+          </div>
+            <div class="close-modal-sp">
+                &#10006;
+            </div>
+        </div>
+        <div class="login-form-sp">
+            <div class="row">
+              <div id="imageContainer" >
+                <img width="130px" style="cursor: pointer; border: 1px dotted #1c2247;" src="{% static 'images/logo/leftside.jpg' %}" id="imgview1" />
+                <img width="130px" style="cursor: pointer; border: 1px dotted #1c2247;" src="{% static 'images/logo/frontside.jpg' %} " id="imgview2" />
+                <img width="130px" style="cursor: pointer; border: 1px dotted #1c2247;" src="{% static 'images/logo/rightside.jpg' %}" id="imgview3" />
+              </div>
+            </div>
+            <center>
+              <span class="name" style="font-weight: 500;">Sadia Afrin</span>
+              <br>  
+              <span style="margin: 0;">Female</span> 
+              <br>
+              <label for="">24<span>Years old</span></label>       
+            </center>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row" style="text-align: left;">
+                  <label for="" style="font-size: medium; margin:10px;">NID : <span style="font-weight: 500;">15056158489</span></label>
+              </div>
+              <div class="row" style="text-align: left;">
+                <div class="col-md-6">
+                  <label for="" style="font-size: medium; margin:10px;">Email : <span style="font-weight: 500;">hridoy1920@gmail.com</span></label>
+                </div>
+                <div class="col-md-6">
+                  <label for="" style="font-size: medium; margin:10px;">Contact No : <span style="font-weight: 500;">+8801521558848</span></label>
+                </div>
+              </div>
+              <div class="row" style="text-align: left;">
+                <div class="col-md-10">
+                  <label for="" style="font-size: medium; margin:10px;">Address : <span style="font-weight: 500;">Kalkini, Madaripur, Dhaka</span></label>
+                </div>
+              </div>
+              <div class="row" style="text-align: left;">
+                <div class="col-md-10">
+                  <label for="" style="font-size: medium; margin:10px;">Recent Physical Characteristics: </label>
+                </div>
+              </div>
+              <div class="row" style="text-align: left;">
+                <div class="col-md-3">
+                  <label for="" style="font-size: small; margin:10px;">Height : <span style="font-weight: 500;">172cm</span></label>
+                </div>
+                <div class="col-md-3">
+                  <label for="" style="font-size: small; margin:10px;">Weight : <span style="font-weight: 500;">80kg</span></label>
+                </div>
+                <div class="col-md-6">
+                  <label for="" style="font-size: small; margin:10px;">Facial Hair : <span style="font-weight: 500;">Mustache with Beard</span></label>
+                </div>
+              </div>
+              <div class="row" style="text-align: left;">
+                <div class="col-md-3">
+                  <label for="" style="font-size: small; margin:10px;">Skin Tone : <span style="font-weight: 500;">Dark</span></label>
+                </div>
+                <div class="col-md-3">
+                  <label for="" style="font-size: small; margin:10px;">Hair Style : <span style="font-weight: 500;">Long</span></label>
+                </div>
+                <div class="col-md-6">
+                  <label for="" style="font-size: small; margin:10px;">Eye Details: <span style="font-weight: 500;">10cm apart</span></label>
+                </div>
+              </div>
+              
+            </div>
+            <div class="col-md-6">  
+              <p style="margin: 0;">Arrest Records</p>
+              <table id="myTable" style="font-size: small;">
+                <thead>
+                <tr>
+                    <th>FIR No</th>
+                    <th>Trial Start</th>
+                    <th>Victims Name</th>
+                    <th>Charges</th>
+                    <th>Judgement Date</th>
+                    <th>Sentence</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>FIR-123</td>
+                    <td>2023-01-10</td>
+                    <td>Joseph D Pie</td>
+                    <td>Robbery</td>
+                    <td>2023-09-10</td>
+                    <td>5 Years Prison Time</td>
+                </tr>
+                <tr>
+                  <td>FIR-125</td>
+                  <td>2022-01-05</td>
+                  <td>Jackson Drown</td>
+                  <td>Kidnapping</td>
+                  <td>2022-07-10</td>
+                  <td>2000(Tk) punishment</td>
+                </tr>
+                <tr>
+                  <td>FIR-123</td>
+                  <td>2023-01-10</td>
+                  <td>Joseph D Pie</td>
+                  <td>Robbery</td>
+                  <td>2023-09-10</td>
+                  <td>5 Years Prison Time</td>
+              </tr>
+                </tbody>
+            </table>
+            </div>
+            <!-- Main Content -->
+          </div>
+        </div>
+    </div>
+    {% endblock %}
+
+    {% block UserDetails %}
+    <i class="fa fa-user me-sm-1"></i>
+    <span class="d-sm-inline d-none">Admin</span>
+    {% endblock %}
+
+    
+    {% block content %}
+    <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <h6>Criminal Records</h6>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center justify-content-center mb-0">
+                  <thead style="text-align: center;">
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Criminal ID</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Name</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Phone</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Previous Crimes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% if criminal_obj %}
+                    {% for criminal in criminal_obj %}
+                    <tr>
+                      <td style="text-align: center;">
+                        <p class="text-xs font-weight-bold mb-0 criminal-id">{{ criminal.id }}</p>
+                      </td>
+                      <td>
+                        <div class="d-flex px-2">
+                          <div>
+                            <img src="{{ criminal.criminal_img.url }}" class="avatar avatar-sm rounded-circle me-2 criminal-img" alt="spotify">
+                          </div>
+                          <div class="my-auto">
+                            <h6 class="mb-0 text-sm criminal-name">{{ criminal.criminal_name }}</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-sm font-weight-bold mb-0 criminal-phone">{{ criminal.criminal_phone }}</p>
+                      </td>
+                      <td>
+                        <p class="criminal-gender" style="display: none;">{{ criminal.criminal_gender }}</p>
+                        <p class="criminal-nid" style="display: none;">{{ criminal.criminal_nid }}</p>
+                        <p class="criminal-email" style="display: none;">{{ criminal.criminal_email }}</p>
+                        <p class="criminal-division" style="display: none;">{{ criminal.criminal_division }}</p>
+                        <p class="criminal-distict" style="display: none;">{{ criminal.criminal_district }}</p>
+                        <p class="criminal-thana" style="display: none;">{{ criminal.criminal_thana }}</p>
+                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_hair_color }}</p>
+                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_skin_tone }}</p>
+                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_hair_style }}</p>
+                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_hair_length }}</p>
+                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_age }}</p>
+                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_face_shape }}</p>
+                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_facial_hair }}</p>
+                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_height }}</p>
+                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_weight }}</p>
+                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_marks }}</p>
+                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_mark_type }}</p>
+
+                        <span class="text-xs font-weight-bold">Murder, Felony, Rape, Cyber Crime, Fraud, Property Damage, Hit & Run</span>
+                      </td>
+                      <td class="align-middle">
+                        <button class="btn btn-link text-secondary mb-0 viewCriminalRecord">
+                          <i class="fa fa-ellipsis-v text-xs"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                    {% else %}
+                    <tr>
+                      No Records Found
+                    </tr>
+                    {% endif %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endblock %}
+
+    {% block Scripts %}
+    <script type="text/javascript">
+      $(function(){
+          $('.viewCriminalRecord').click(function(){
+            
+            var criminalName = $(this).closest('tr').find('.criminal-name').text();
+            $('#login-modal-sp .modal-sp .name').text(criminalName);
+
+              $('#sidenav-main').fadeOut();
+              $('#login-modal-sp').fadeIn().css("display", "flex");
+          });
+      });
+      $('.close-modal-sp').click(function(){
+        $('#sidenav-main').fadeIn();
+          $('#login-modal-sp').fadeOut();
+      });
+  
+  </script>
+
+  <script>
+      $(document).ready(function() {
+          $('#myTable').DataTable({
+            "pageLength": 2,
+            "lengthMenu": [ [2, 3], [2, 3] ]
+          });
+      });
+    </script>
+
+    {% endblock %}

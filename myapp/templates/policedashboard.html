@@ -1,0 +1,140 @@
+{% extends "user_base.html" %}
+{% load static %}
+  
+  {% block title %}Criminal Identification System{% endblock %}
+
+  {% block head %}
+  <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+  {% endblock %}
+
+  {% block ProfilerType %}Admin{% endblock %}
+    {% block Pagetitle %}Dashboard{% endblock %}
+
+    {% block dashboard_active %}active{% endblock %}
+
+    {% block sidebar_item2 %}New Arrest{% endblock %}
+    {% block sidevar_2 %}
+    {% url 'ArrestPage' user.id %}
+    {% endblock %}
+
+    {% block sidebar_item3 %}Criminal Records{% endblock %}
+    {% block sidevar_3 %}
+    {% url 'CriminalPage' user.id %}
+    {% endblock %}
+    {% block sidebar_item4 %}Approve Applications{% endblock %}
+    {% block UserDetails %}
+    <i class="fa fa-user me-sm-1"></i>
+    <span class="d-sm-inline d-none">Admin</span>
+    {% endblock %}
+    
+    {% block content %}
+    <div class="container-fluid py-4">
+      <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <h6>Newly incomming FIRs</h6>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="row" style="justify-content: space-between; margin: auto;">
+                  <div class="card border-success mb-3" style="max-width: 12rem;">
+                    
+                    <div class="card-body text-success">
+                      <h5 class="card-title">Newly Arrieved Complains</h5>
+                      <p class="card-text">{{ case_records.count }}</p>
+                    </div>
+                  </div>
+                
+                  <div class="card border-danger mb-3" style="max-width: 12rem;">
+                    
+                    <div class="card-body text-danger">
+                      <h5 class="card-title">Rejected Complains</h5>
+                      <p class="card-text">12 </p>
+                    </div>
+                  </div>
+                
+                  <div class="card border-warning mb-3" style="max-width: 12rem;">
+                    
+                    <div class="card-body">
+                      <h5 class="card-title">On Progress</h5>
+                      <p class="card-text">12 </p>
+                      <a href="#" class="btn btn-primary">Update Case</a>
+                    </div>
+                  </div>
+                
+                  <div class="card border-primary mb-3" style="max-width: 12rem;">
+                    
+                    <div class="card-body text-primary">
+                      <h5 class="card-title">Completed</h5>
+                      <p class="card-text">12 </p>
+                    </div>
+                  </div>
+                
+              </div>
+            <div class="card-body px-0 pt-0 pb-2">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center mb-0">
+                  <thead>
+                    <tr>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">FIR ID</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Victim Name</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                      <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date</th>
+                      <th class="text-secondary opacity-7"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  {% if case_records %}
+                      {% for case in case_records %}
+                      <tr>
+                        <td>
+                          <p class="text-xs font-weight-bold mb-0">#{{ case.id }}</p>
+                        <td>
+                          <div class="d-flex px-2 py-1">
+                            <div>
+                              <img src="{% if case.victim_name.profile_image %}{{ case.victim_name.profile_image.url }}{% else %}{% static 'img/team-2.jpg' %}{% endif %}" class="avatar avatar-sm me-3" alt="user1">
+                            </div>
+                            <div class="d-flex flex-column justify-content-center">
+                              <h6 class="mb-0 text-sm">{{ case.victim_name.name }}</h6>
+                              <p class="text-xs text-secondary mb-0">{{ case.victim_name.email }}</p>
+                            </div>
+                          </div>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                          {% if case.case_status == 'Pending' %}
+                          <span class="badge badge-sm bg-gradient-Pending">{{ case.case_status }}</span>
+                          {% elif case.case_status == 'On Going' %}
+                            <span class="badge badge-sm bg-gradient-OnGoing">{{ case.case_status }}</span>
+                          {% elif case.case_status == 'Completed' %}
+                            <span class="badge badge-sm bg-gradient-success">{{ case.case_status }}</span>
+                          {% endif %}
+                        </td>
+                        <td class="align-middle text-center">
+                          <span class="text-secondary text-xs font-weight-bold">{{ case.occurance_date }} - {{ case.occurance_time }}</span>
+                        </td>
+                        <td class="align-middle">
+                          <a href="{% url 'firinfo' case.id %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                            Details
+                          </a>
+                        </td>
+                      </tr>
+                      {% endfor %}
+                  {% else %}
+                  <tr>
+                    <p>NO FIR Came In your FIR</p>
+                  </tr>
+                  {% endif %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% endblock %}
+
+    {% block Scripts %}
+
+    {% endblock %}

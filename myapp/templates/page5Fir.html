@@ -1,0 +1,102 @@
+{% extends "user_base.html" %}
+{% load static %}
+  
+  {% block title %}Criminal Identification System{% endblock %}
+
+  {% block head %}
+  <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        .modal-sp{
+        width: 80%; 
+        height: 70%;
+        }
+        .dataTables_paginate span
+        {
+        padding: 50px;
+        }
+        .box-info {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        grid-gap: 24px;
+        margin-top: 36px;
+        }
+        .box-info li {
+            padding: 24px;
+            background: var(--light);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            grid-gap: 24px;
+        }
+        .box-info li .bx {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            font-size: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  {% endblock %}
+
+    {% block ProfilerType %}User{% endblock %}
+    {% block Pagetitle %}Dashboard{% endblock %}
+
+    {% block dashboard_active %}active{% endblock %}
+
+    {% block sidebar_item2 %}New FIR{% endblock %}
+    {% block sidebar_item3 %}Application Request{% endblock %}
+    {% block sidebar_item4 %}Live Chat{% endblock %}
+
+    {% block sidevar_2 %}
+          {% url 'UseComplainPage1' user.id 0%}
+    {% endblock %}
+    {% block UserDetails %}
+    <img src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}{% static 'img/Comoon_People.webp' %}{% endif %}" alt="" style="width: 50px; border-radius: 100%;">
+    <span class="d-sm-inline d-none">{{ user.name }}</span>
+    {% endblock %}
+
+
+    {% block content %}
+        <div class="container-fluid py-4">
+            <p>For Now accept one Criminal and complete the FIR</p>
+            <div class="container">
+                <div class="row mx-auto my-auto">
+                    {% if results %}
+                    {% for result in results %}
+                    <div class="col my-auto">
+                        <div class="card" style="width: 15rem;">
+                            <img class="card-img-top" src="{% if user.profile_image %}{{ result.criminal_img.url }}{% else %}{% static 'img/criminal/frontside.jpg' %}{% endif %}" alt="Card image cap">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ result.criminal_name }}</h5>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">{{ result.criminal_nid }}</li>
+                            </ul>
+                            <div class="card-body">
+                                <button class="btn btn-success" type="submit">Accept</button>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                        <p>No matches Found</p>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% block Scripts %}
+        <script>
+            function sendCriminalid(criminal_id, user_id){
+                let strr =   '/backtohome/' + criminal_id + '/' + user_id + '/';
+                window.location.href = strr;
+            }
+        </script>
+
+    {% endblock %}
