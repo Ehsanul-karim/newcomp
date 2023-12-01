@@ -37,7 +37,7 @@
     <div class="modal-sp">
         <div class="top-form-sp">
           <div class="criminal" style="position: relative; left: -75%;">
-            <label style="font-size: medium;">Criminal ID: <span style="font-weight: 400;">#20231014001</span></label>
+            <label style="font-size: medium;">Criminal ID: <span class="criminal_identity" style="font-weight: 400;">#20231014001</span></label>
           </div>
             <div class="close-modal-sp">
                 &#10006;
@@ -46,34 +46,34 @@
         <div class="login-form-sp">
             <div class="row">
               <div id="imageContainer" >
-                <img width="130px" style="cursor: pointer; border: 1px dotted #1c2247;" src="{% static 'images/logo/leftside.jpg' %}" id="imgview1" />
-                <img width="130px" style="cursor: pointer; border: 1px dotted #1c2247;" src="{% static 'images/logo/frontside.jpg' %} " id="imgview2" />
-                <img width="130px" style="cursor: pointer; border: 1px dotted #1c2247;" src="{% static 'images/logo/rightside.jpg' %}" id="imgview3" />
+                <!-- <img width="130px" style="cursor: pointer; border: 1px dotted #1c2247;" src="{% static 'images/logo/leftside.jpg' %}" class="imgview1" /> -->
+                <img width="130px" style="cursor: pointer; border: 1px dotted #1c2247;" src="{% static 'images/logo/frontside.jpg' %} " class="imgview2" />
+                <!-- <img width="130px" style="cursor: pointer; border: 1px dotted #1c2247;" src="{% static 'images/logo/rightside.jpg' %}" class="imgview3" /> -->
               </div>
             </div>
             <center>
               <span class="name" style="font-weight: 500;">Sadia Afrin</span>
               <br>  
-              <span style="margin: 0;">Female</span> 
+              <span class="gender" style="margin: 0;">Female</span> 
               <br>
-              <label for="">24<span>Years old</span></label>       
+              <label class="ages" for="">24<span>Years old</span></label>       
             </center>
           <div class="row">
             <div class="col-md-6">
               <div class="row" style="text-align: left;">
-                  <label for="" style="font-size: medium; margin:10px;">NID : <span style="font-weight: 500;">15056158489</span></label>
+                  <label for="" style="font-size: medium; margin:10px;">NID : <span class="nidnumber" style="font-weight: 500;">15056158489</span></label>
               </div>
               <div class="row" style="text-align: left;">
                 <div class="col-md-6">
-                  <label for="" style="font-size: medium; margin:10px;">Email : <span style="font-weight: 500;">hridoy1920@gmail.com</span></label>
+                  <label for="" style="font-size: medium; margin:10px;">Email : <span class="emailss" style="font-weight: 500;">hridoy1920@gmail.com</span></label>
                 </div>
                 <div class="col-md-6">
-                  <label for="" style="font-size: medium; margin:10px;">Contact No : <span style="font-weight: 500;">+8801521558848</span></label>
+                  <label for="" style="font-size: medium; margin:10px;">Contact No : <span class="contactss" style="font-weight: 500;">+8801521558848</span></label>
                 </div>
               </div>
               <div class="row" style="text-align: left;">
                 <div class="col-md-10">
-                  <label for="" style="font-size: medium; margin:10px;">Address : <span style="font-weight: 500;">Kalkini, Madaripur, Dhaka</span></label>
+                  <label for="" style="font-size: medium; margin:10px;">Address : <span class="addressed" style="font-weight: 500;">Kalkini, Madaripur, Dhaka</span></label>
                 </div>
               </div>
               <div class="row" style="text-align: left;">
@@ -83,24 +83,38 @@
               </div>
               <div class="row" style="text-align: left;">
                 <div class="col-md-3">
-                  <label for="" style="font-size: small; margin:10px;">Height : <span style="font-weight: 500;">172cm</span></label>
+                  <label for="" style="font-size: small; margin:10px;">Height : <span class="heights" style="font-weight: 500;">172cm</span></label>
                 </div>
                 <div class="col-md-3">
-                  <label for="" style="font-size: small; margin:10px;">Weight : <span style="font-weight: 500;">80kg</span></label>
+                  <label for="" style="font-size: small; margin:10px;">Weight : <span class="weights" style="font-weight: 500;">80kg</span></label>
                 </div>
                 <div class="col-md-6">
-                  <label for="" style="font-size: small; margin:10px;">Facial Hair : <span style="font-weight: 500;">Mustache with Beard</span></label>
+                  <label for="" style="font-size: small; margin:10px;">Hair Length: <span class="hairlength" style="font-weight: 500;">BIG</span></label>
                 </div>
               </div>
               <div class="row" style="text-align: left;">
                 <div class="col-md-3">
-                  <label for="" style="font-size: small; margin:10px;">Skin Tone : <span style="font-weight: 500;">Dark</span></label>
+                  <label for="" style="font-size: small; margin:10px;">Skin Tone : <span class="skingtones" style="font-weight: 500;">Dark</span></label>
                 </div>
                 <div class="col-md-3">
-                  <label for="" style="font-size: small; margin:10px;">Hair Style : <span style="font-weight: 500;">Long</span></label>
+                  <label for="" style="font-size: small; margin:10px;">Hair Style : <span class="hairstyles" style="font-weight: 500;">Long</span></label>
                 </div>
                 <div class="col-md-6">
-                  <label for="" style="font-size: small; margin:10px;">Eye Details: <span style="font-weight: 500;">10cm apart</span></label>
+                  <label for="" style="font-size: small; margin:10px;">Hair Color: <span class="haircolor" style="font-weight: 500;">Black</span></label>
+                </div>
+              </div>
+              <div class="row" style="text-align: left;">
+                <div class="col-md-3">
+                  <label for="" style="font-size: small; margin:10px;">Predict Age : <span class="predictage" style="font-weight: 500;">NULL</span></label>
+                </div>
+                <div class="col-md-3">
+                  <label for="" style="font-size: small; margin:10px;">Face Shape : <span class="faceshape" style="font-weight: 500;">NULL</span></label>
+                </div>
+                <div class="col-md-3">
+                  <label for="" style="font-size: small; margin:10px;">Facial Hair: <span class="facialhair" style="font-weight: 500;">NULL</span></label>
+                </div>
+                <div class="col-md-3">
+                  <label for="" style="font-size: small; margin:10px;">Mark: <span class="mark" style="font-weight: 500;">NULL</span></label>
                 </div>
               </div>
               
@@ -172,7 +186,7 @@
                     <tr>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Criminal ID</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Name</th>
-                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Phone</th>
+                      <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">Age</th>
                       <th class="text-uppercase text-secondary text-xxs font-weight-bolder text-center opacity-7 ps-2">Previous Crimes</th>
                     </tr>
                   </thead>
@@ -194,32 +208,33 @@
                         </div>
                       </td>
                       <td>
-                        <p class="text-sm font-weight-bold mb-0 criminal-phone">{{ criminal.criminal_phone }}</p>
+                        <p class="text-sm font-weight-bold mb-0 criminal-phone" style="display: none;">{{ criminal.criminal_phone }}</p>
+                        <p class="text-sm font-weight-bold mb-0 criminal-phone">{{ criminal.calculate_age }}</p>
                       </td>
                       <td>
+                        <p class="criminal-actual-age" style="display: none;">{{ criminal.calculate_age }}</p>
                         <p class="criminal-gender" style="display: none;">{{ criminal.criminal_gender }}</p>
                         <p class="criminal-nid" style="display: none;">{{ criminal.criminal_nid }}</p>
                         <p class="criminal-email" style="display: none;">{{ criminal.criminal_email }}</p>
-                        <p class="criminal-division" style="display: none;">{{ criminal.criminal_division }}</p>
-                        <p class="criminal-distict" style="display: none;">{{ criminal.criminal_district }}</p>
-                        <p class="criminal-thana" style="display: none;">{{ criminal.criminal_thana }}</p>
+                        <p class="criminal-address" style="display: none;">{{ criminal.criminal_division }}, {{ criminal.criminal_district }}, {{ criminal.criminal_thana }} </p>
+                        <p class="criminal-predictage" style="display: none;">{{ criminal.criminal_age }}</p>
+                        <p class="criminal-skin-tone" style="display: none;">{{ criminal.criminal_skin_tone }}</p>
+                        <p class="criminal-hair-style" style="display: none;">{{ criminal.criminal_hair_style }}</p>
                         <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_hair_color }}</p>
-                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_skin_tone }}</p>
-                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_hair_style }}</p>
-                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_hair_length }}</p>
-                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_age }}</p>
-                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_face_shape }}</p>
-                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_facial_hair }}</p>
-                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_height }}</p>
-                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_weight }}</p>
-                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_marks }}</p>
-                        <p class="criminal-hair-color" style="display: none;">{{ criminal.criminal_mark_type }}</p>
-
+                        <p class="criminal-hair-length" style="display: none;">{{ criminal.criminal_hair_length }}</p>
+                        <p class="criminal-height" style="display: none;">{{ criminal.criminal_height }}</p>
+                        <p class="criminal-weight" style="display: none;">{{ criminal.criminal_weight }}</p>
+                        <p class="criminal-faceshape" style="display: none;">{{ criminal.criminal_face_shape }}</p>
+                        <p class="criminal-facialhair" style="display: none;">{{ criminal.criminal_facial_hair }}</p>
+                        <p class="criminal-mark" style="display: none;">{{ criminal.criminal_marks }} - {{ criminal.criminal_mark_type }}</p>
+                      </td>
+                      <td>
                         <span class="text-xs font-weight-bold">Murder, Felony, Rape, Cyber Crime, Fraud, Property Damage, Hit & Run</span>
                       </td>
                       <td class="align-middle">
                         <button class="btn btn-link text-secondary mb-0 viewCriminalRecord">
                           <i class="fa fa-ellipsis-v text-xs"></i>
+                          View
                         </button>
                       </td>
                     </tr>
@@ -244,7 +259,29 @@
           $('.viewCriminalRecord').click(function(){
             
             var criminalName = $(this).closest('tr').find('.criminal-name').text();
+            var criminalID = $(this).closest('tr').find('.criminal-id').text();
+
+
             $('#login-modal-sp .modal-sp .name').text(criminalName);
+            $('#login-modal-sp .modal-sp .criminal_identity').text(criminalID);
+            $('#login-modal-sp .modal-sp .imgview2').attr('src',$(this).closest('tr').find('.criminal-img').attr('src'));
+            $('#login-modal-sp .modal-sp .ages').text($(this).closest('tr').find('.criminal-actual-age').text());
+            $('#login-modal-sp .modal-sp .nidnumber').text($(this).closest('tr').find('.criminal-nid').text());
+            $('#login-modal-sp .modal-sp .gender').text($(this).closest('tr').find('.criminal-gender').text());
+            $('#login-modal-sp .modal-sp .emailss').text($(this).closest('tr').find('.criminal-email').text());
+            $('#login-modal-sp .modal-sp .contactss').text($(this).closest('tr').find('.criminal-phone').text());
+            $('#login-modal-sp .modal-sp .addressed').text($(this).closest('tr').find('.criminal-address').text());
+            $('#login-modal-sp .modal-sp .heights').text($(this).closest('tr').find('.criminal-height').text());
+            $('#login-modal-sp .modal-sp .weights').text($(this).closest('tr').find('.criminal-weight').text());
+            $('#login-modal-sp .modal-sp .skingtones').text($(this).closest('tr').find('.criminal-skin-tone').text());
+            $('#login-modal-sp .modal-sp .hairstyles').text($(this).closest('tr').find('.criminal-hair-style').text());
+            $('#login-modal-sp .modal-sp .hairlength').text($(this).closest('tr').find('.criminal-hair-length').text());
+            $('#login-modal-sp .modal-sp .haircolor').text($(this).closest('tr').find('.criminal-hair-color').text());
+
+            $('#login-modal-sp .modal-sp .predictage').text($(this).closest('tr').find('.criminal-predictage').text());
+            $('#login-modal-sp .modal-sp .faceshape').text($(this).closest('tr').find('.criminal-faceshape').text());
+            $('#login-modal-sp .modal-sp .facialhair').text($(this).closest('tr').find('.criminal-facialhair').text());
+            $('#login-modal-sp .modal-sp .mark').text($(this).closest('tr').find('.criminal-mark').text());
 
               $('#sidenav-main').fadeOut();
               $('#login-modal-sp').fadeIn().css("display", "flex");

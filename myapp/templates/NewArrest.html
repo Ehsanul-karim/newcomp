@@ -267,8 +267,14 @@
                                     </div>
                                     <div class="col-md-5">
                                         <label for="">FIR#</label>
-                                        <input class="form-control" name="FIRno" type="text" id="TextBox5" placeholder="FIR No">
+                                        <select required class="form-select form-select-sm" aria-label=".form-select-sm example"  name="FIRno" id="FIRno" style="font-size: medium;">
+                                            {% for fir_number in fir_numbers %}
+                                            <option value="{{ fir_number.id }}">{{ fir_number.id }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        <!-- <input class="form-control" name="FIRno" type="text" id="TextBox5" placeholder="FIR No"> -->
                                     </div>
+
                                     <div class="col-md-6">
                                         <label>Proposed Charges</label>
                                         <div class="form-group">
@@ -390,10 +396,10 @@
                                     <div class="row" style="margin: 10px;">
                                             <select id="Type_of_distinguishing_marks" class="form-control" style="display: none;" name="Disguish">
                                               <option value="">Type of Marks</option>
-                                              <option value="dhaka">Scars</option>
-                                              <option value="chittagong">Tattoos</option>
-                                              <option value="sylhet ">Moles </option>
-                                              <option value="mymensingh">Other</option>
+                                              <option value="Scars">Scars</option>
+                                              <option value="Tattoos">Tattoos</option>
+                                              <option value="Moles">Moles </option>
+                                              <option value="Other">Other</option>
                                             </select>
                                     </div>
                                 </div>
@@ -408,7 +414,10 @@
                                     <label class="btn btn-lg btn-block" style="background-color: #293897; border-color: #293897; color: white;"><a href="#" id="CISbutton">Apply CIS</a></label>
                                     <!--<button class="btn btn-lg btn-block" style="background-color: #293897; border-color: #293897; color: white;" id="CISbutton" onclick="applyCIS()">Apply CIS</button> -->
                                 </div>
-                            </div>                       
+                                <div class="progress">
+                                    <progress class="progress-bar progress-bar-striped progress-bar-animated" id="progressBar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></progress>
+                                  </div>
+                            </div>                    
                         </div>
                     </div>
                     <div class="row">
@@ -550,6 +559,40 @@
     }
     </script>
 <script>
+
+var progressBar = document.getElementById('progressBar');
+var fetchInProgress = false; 
+
+// function fillProgressBar() {
+//     var value = progressBar.value;
+//     value += 1; // Increment the value by 20
+//     progressBar.value = value; // Update the value
+
+//     // If the value is less than or equal to 100, call the function again after 100 milliseconds
+//     if (value <= 100) {
+//         setTimeout(fillProgressBar, 100);
+//     }
+// }
+
+        function fillProgressBar() {
+            var value = progressBar.value;
+            var increment = 1;
+            var totalIncrements = 100 / increment;
+            var duration = 50000; // 5 seconds in milliseconds
+            var timeInterval = duration / totalIncrements;
+
+            function updateProgressBar() {
+                value += increment;
+                progressBar.value = value;
+
+                if (value < 100) {
+                    setTimeout(updateProgressBar, timeInterval);
+                }
+            }
+
+            updateProgressBar();
+        }
+
         var gender = document.getElementById("TextBox14");
         var hairColor = document.getElementById("TextBox15");
         var skinTone = document.getElementById("TextBox6");
@@ -568,11 +611,15 @@
 
         var showMapLink = document.getElementById('CISbutton');
         showMapLink.addEventListener('click', function (event) {
+            if (!fetchInProgress) {
+                fetchInProgress = true;
+                fillProgressBar();
+            }
             let formData = new FormData();
             // Append form data
             // var fileInput = document.getElementById('imageInput');
             // var file = fileInput.files[0];
-            formData.append('criminal_id', document.getElementById("TextBoxCriminalID").value);
+            // formData.append('criminal_id', document.getElementById("TextBoxCriminalID").value);
             // formData.append('image', file);
             /*
             formData.append('gender', document.getElementById("TextBox14").value);
@@ -587,9 +634,9 @@
             formData.append('weight', document.getElementById("TextBox13").value);
             */
             // Append image files
-            formData.append('leftFacedImage', fileInput1.files[0]);
+            // formData.append('leftFacedImage', fileInput1.files[0]);
             formData.append('FrontFacedImage', fileInput2.files[0]);
-            formData.append('RightFacedImage', fileInput3.files[0]);
+            // formData.append('RightFacedImage', fileInput3.files[0]);
 
             let token = '{{ csrf_token }}';
             formData.append('csrfmiddlewaretoken',token);

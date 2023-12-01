@@ -330,6 +330,11 @@
 
         // Initial call to populate district options based on default division (if any)
         updateDistricts();
+
+        document.getElementById('iconNavbarSidenav').addEventListener('click', function() {
+            document.querySelector('#sidenav-main').classList.toggle('show');
+        });
+
       </script>
       {% block Scripts %}
       {% endblock %}

@@ -268,12 +268,7 @@ class CriminalProfile(models.Model):
     criminal_division = models.CharField(max_length=255, null=True)
     criminal_district = models.CharField(max_length=255, null=True)
     criminal_thana = models.CharField(max_length=255, null=True)
-    criminal_fir_id = models.ForeignKey(
-        CASE_FIR, 
-        on_delete=models.CASCADE, 
-        null=True, 
-        blank=True
-    )
+    criminal_firs = models.ManyToManyField(CASE_FIR)
     criminal_crimes = models.CharField(max_length=255, null=True)
     criminal_arrest_date = models.DateField(null=True)
     criminal_gender = models.CharField(max_length=255, null=True)

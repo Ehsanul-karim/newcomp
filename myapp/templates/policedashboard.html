@@ -95,8 +95,16 @@
                               <img src="{% if case.victim_name.profile_image %}{{ case.victim_name.profile_image.url }}{% else %}{% static 'img/team-2.jpg' %}{% endif %}" class="avatar avatar-sm me-3" alt="user1">
                             </div>
                             <div class="d-flex flex-column justify-content-center">
+                              {% if case.victim_name.name %}
                               <h6 class="mb-0 text-sm">{{ case.victim_name.name }}</h6>
+                              {% else %}
+                              <h6 class="mb-0 text-sm">None</h6>
+                              {% endif %}
+                              {% if case.victim_name.email %}
                               <p class="text-xs text-secondary mb-0">{{ case.victim_name.email }}</p>
+                              {% else %}
+                              <p class="text-xs text-secondary mb-0">Null</p>
+                              {% endif %}
                             </div>
                           </div>
                         </td>
@@ -113,7 +121,7 @@
                           <span class="text-secondary text-xs font-weight-bold">{{ case.occurance_date }} - {{ case.occurance_time }}</span>
                         </td>
                         <td class="align-middle">
-                          <a href="{% url 'firinfo' case.id %}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                          <a href="{% url 'firinfo' case.id user.id%}" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                             Details
                           </a>
                         </td>

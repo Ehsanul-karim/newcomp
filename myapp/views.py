@@ -905,7 +905,8 @@ def ArrestPage(request, admin_id, criminal_id=None):
         admin = AdminProfile.objects.get(id=admin_id)
         return  render(request, 'NewArrest.html',{'user': admin })
     admin = AdminProfile.objects.get(id=admin_id)
-    return  render(request, 'NewArrest.html',{'user': admin })
+    fir_numbers = CASE_FIR.objects.all()
+    return  render(request, 'NewArrest.html',{'user': admin,'fir_numbers':fir_numbers })
 
 def applyCISLoader(request):
     if request.method == 'POST':
