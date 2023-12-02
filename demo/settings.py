@@ -89,6 +89,10 @@ CHANNEL_LAYERS = {
     },
 }
 
+# CHANNEL_ROUTING = [
+#     "myapp.routing.channel_routing",
+# ]
+
 # CHANNEL_LAYERS = {
 #     'default': {
 #         'BACKEND': 'asgi_redis.RedisChannelLayer',

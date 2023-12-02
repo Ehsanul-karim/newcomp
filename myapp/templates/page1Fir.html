@@ -12,7 +12,7 @@
             <div class="col-md-2">
                 <div class="row mb-2">
                     <div class="col-md-12">
-                        <input type="radio" id="selfCheckbox" name="userType" data-user-id=" {{ user.id }} "  data-image-url="{{ user.profile_image.url }}" data-victim-name="{{ user.name }}" data-victim-age="{{ user.date_of_birth }}" data-victim-ssn="{{ user.nid }}"  data-victim-division="{{ user.division }}" data-victim-district="{{ user.district }}" data-victim-upazila="{{ user.upazila }}" data-victim-email="{{ user.email }}" data-victim-mobile="{{ user.phone }}" data-victim-id-of-user="{{ user.victim_id.id }}">
+                        <input type="radio" id="selfCheckbox" name="userType" data-user-id=" {{ user.id }} "  data-image-url="{% if user.profile_image %}{{ user.profile_image.url }}{% endif %}" data-victim-name="{{ user.name }}" data-victim-age="{{ user.date_of_birth }}" data-victim-ssn="{{ user.nid }}"  data-victim-division="{{ user.division }}" data-victim-district="{{ user.district }}" data-victim-upazila="{{ user.upazila }}" data-victim-email="{{ user.email }}" data-victim-mobile="{{ user.phone }}" data-victim-id-of-user="{{ user.victim_id.id }}">
                         <label for="selfCheckbox" style="font-size: medium; font-weight: 500;">Self</label>
                     </div>
                     <div class="col-md-12">
@@ -142,7 +142,7 @@
             </div>
         </div>
         <input type="text" class="form-control" value=" {{ user.id }}" id="hiddenUser" name="hiddenUser" style="display: none;" >
-        <input type="text" id="filePathInput" value=" {{ user.profile_image.url }} " style="display: none;">
+        <input type="text" id="filePathInput" value=" {% if user.profile_image %}{{ user.profile_image.url }}{% endif %}" style="display: none;">
     </div>
 </form>
 {% endblock %} 

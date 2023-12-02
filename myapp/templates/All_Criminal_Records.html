@@ -29,7 +29,10 @@
     {% url 'ArrestPage' user.id %}
     {% endblock %}
     {% block sidebar_item3 %}Criminal Records{% endblock %}
-    {% block sidebar_item4 %}Approve Applications{% endblock %}
+    {% block sidebar_item4 %}Emergency{% endblock %}
+    {% block sidevar_4 %}
+    {% url 'emergency' user.id %}
+    {% endblock %}
     {% block sidebar_item5_details %}          
     {% endblock %}
 

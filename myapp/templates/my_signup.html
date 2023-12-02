@@ -296,7 +296,6 @@ LongitudeValue.value = long
             upazilaOption.value = upazila;
             upazilaOption.text = upazila;
             upazilaSelect.appendChild(upazilaOption);
-
       // Find and set the selected option for the division select element
       Array.from(divisionSelect.options).find(option => option.value === division).selected = true;
 
@@ -309,7 +308,7 @@ LongitudeValue.value = long
   })
   .catch(error => {
     console.error('Error fetching place details:', error);
-  });
+  });                   
 });
 
 </script>

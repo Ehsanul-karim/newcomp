@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from .views import MapView
+from channels.routing import ProtocolTypeRouter, URLRouter
 
 urlpatterns = [
     path('', views.home, name = "HOME"),
@@ -11,9 +12,11 @@ urlpatterns = [
     path('mylogin/', views.mylogin, name = "LOGIN"),
     path('userhome/<int:user_id>/', views.UserHomePage, name = "UserHomePage"),
     path('adminhome/<int:user_id>/', views.AdminHomePage, name = "AdminHomePage"),
-    path('arrest/<int:admin_id>/', views.ArrestPage, name = "ArrestPage"),
+    path('arrest/<int:admin_id>/', views.ArrestPage, name = "ArrestPage"),    
     path('arrest/<int:admin_id>/<int:criminal_id>/', views.ArrestPage, name = "ArrestPage"),
+    path('emergency/<int:admin_id>/', views.emergency, name = "emergency"),
     path('applyCIS/', views.applyCISLoader, name = "applyCISLoad"),
+    path('save_marker/', views.save_marker, name = "save_marker"),
     path('criminalpage/<int:admin_id>', views.allCriminalPage, name = "CriminalPage"),
     path('criminalpage/', views.allCriminalPage, name = "CriminalPage"),
     path('p1complain/<int:user_id>/<int:FIR_id>', views.complain1, name = "UseComplainPage1"),

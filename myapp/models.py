@@ -318,3 +318,12 @@ class Notice(models.Model):
 class FAQ(models.Model):
     Ques = models.CharField(max_length=255, blank=True)
     Ans = models.CharField(max_length=255, blank=True)
+
+class EMERGENCY(models.Model):
+    emergency_location = models.ManyToManyField(MapMarker)
+    sender = models.ForeignKey(
+        UserProfile,
+        on_delete=models.PROTECT,  # You can choose the appropriate behavior for deletion
+        null=True,
+    )
+    timestamp = models.TimeField(default=timezone.now)

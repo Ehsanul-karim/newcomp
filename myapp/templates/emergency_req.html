@@ -1,0 +1,163 @@
+{% extends "user_base.html" %}
+{% load static %}
+  
+  {% block title %}Criminal Identification System{% endblock %}
+
+  {% block head %}
+  <style>
+    .modal-sp{
+      width: 80%; 
+      height: 70%;
+    }
+    .dataTables_paginate span
+    {
+      padding: 50px;
+    }
+  </style>
+       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="crossorigin=""/>
+       <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  {% endblock %}
+
+  {% block ProfilerType %}Admin{% endblock %}
+    {% block Pagetitle %}Dashboard{% endblock %}
+
+    {% block item_4 %}active{% endblock %}
+
+    {% block sidebar_item2 %}New Arrest{% endblock %}
+    {% block sidevar_1 %}
+    {% url 'AdminHomePage' user.id %}
+    {% endblock %}
+    {% block sidevar_2 %}
+    {% url 'ArrestPage' user.id %}
+    {% endblock %}
+    {% block sidevar_3 %}
+    {% url 'CriminalPage' user.id %}
+    {% endblock %}
+    {% block sidebar_item3 %}Criminal Records{% endblock %}
+    {% block sidebar_item4 %}Emergency{% endblock %}
+    {% block sidebar_item5_details %}          
+    {% endblock %}
+
+    {% block UserDetails %}
+    <i class="fa fa-user me-sm-1"></i>
+    <span class="d-sm-inline d-none">Admin</span>
+    {% endblock %}
+
+    {% block login-modelss %}
+    <div class="modal-sp" style="height: 65%;">
+        <div class="top-form-sp">
+          <div class="criminal" style="position: relative; left: -75%;">
+            <label for="" style="font-size: medium; margin:10px;">Name : <span class="name" style="font-weight: 500;">Ikram</span></label>
+          </div>
+            <div class="close-modal-sp">
+                &#10006;
+            </div>
+        </div>
+        <div class="login-form-sp">
+          <div class="row">
+              <div class="row" style="text-align: left;">
+                    <div class="row" id="map-container" style="justify-content: center;">
+                        <div id="map" style="height: 350px; width: 60%;"></div>
+                    </div>
+              </div>
+          </div>
+        </div>
+    </div>
+    {% endblock %}
+
+
+    
+    {% block content %}
+    <div class="row">
+        <div class="col-12">
+          <div class="card mb-4">
+            <div class="card-header pb-0">
+              <h6>Emmergency Requests</h6>
+            </div>
+            <div class="card-body px-0 pt-0 pb-2">
+                <div class="row">
+                    <!-- <p class="card-vic-lon card-text">{{ emer_want.items }}</p> -->
+                    {% for sender, emergencies in grouped_emergencies.items %}
+                    <div class="card" style="width: 18rem; cursor: pointer;">
+                        <img src="{% static 'img/mapimage.jpg' %}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <p class="card-vic-name card-text ">{{ sender.name }}</p>
+
+                            {% for new,loc in emer_want.items %}
+                                {% for i in loc %}
+                                    <li style="display: none;">{{ i.0 }} ({{ i.1 }})</li>
+                                {% endfor %}
+                            {% endfor %}
+
+                            <p class="card-vic-time card-text ">{{ emergencies.0.timestamp }}</p>
+                            <!-- Add other emergency fields as needed -->
+                            <p></p>
+                            <button class="btn btn-success mb-0 viewMapRecord">
+                                Preview
+                            </button>
+                        </div>
+                    </div>
+                {% endfor %}
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endblock %}
+
+    {% block Scripts %}
+    <script>
+        var map = L.map('map').setView([23.8103, 90.4125], 8);
+          L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+          }).addTo(map);
+      </script>
+
+<script type="text/javascript">
+    $(function(){
+        $('.viewMapRecord').click(function(){
+            // var markersData = JSON.parse($(this).data('markers'));
+        var card = $(this).closest('.card');
+        var victimName = card.find('.card-vic-name').text();
+
+
+        var markers = [];
+
+        // Iterate through the list items and extract latitude and longitude
+        card.find('.card-body li').each(function(){
+            
+            var parts = $(this).text().split(" ");
+            if (parts) {
+                var latitude = parseFloat(parts[0]);
+                var longitude = parseFloat(parts[1].replace(/[^\d.-]/g, ''));
+                map.setView([latitude, longitude], 13); 
+                markers.push({ name: victimName, latlng: [latitude, longitude] });
+            }
+        });
+
+        // Display markers on the map
+        displayMarkersOnMap(markers);
+                // similar like L.marker([markerData.latitude, markerData.longitude]).addTo(map);
+
+          $('#login-modal-sp .modal-sp .name').text(victimName);
+            $('#sidenav-main').fadeOut();
+            $('#login-modal-sp').fadeIn().css("display", "flex");
+        });
+    });
+
+    
+
+    $('.close-modal-sp').click(function(){
+      $('#sidenav-main').fadeIn();
+        $('#login-modal-sp').fadeOut();
+    });
+
+        function displayMarkersOnMap(markers) {
+            markers.forEach(function(marker) {
+                L.marker(marker.latlng).addTo(map).bindPopup(marker.name);
+            });
+        }
+</script>
+
+    {% endblock %}

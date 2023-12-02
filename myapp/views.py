@@ -11,7 +11,7 @@ from django.contrib.auth.hashers import make_password
 from django.contrib.auth.hashers import check_password
 from demo import settings
 from django.db.models import Q
-from .models import CriminalProfile, Notice,FAQ,UserNotificationPanel, UserTable, UserProfile, MapMarker, AdminProfile, victimInfo, CASE_FIR, Relation, witnessInfo, Crimetype, PhysicalStructure
+from .models import CriminalProfile, Notice,FAQ,UserNotificationPanel, UserTable, UserProfile,EMERGENCY, MapMarker, AdminProfile, victimInfo, CASE_FIR, Relation, witnessInfo, Crimetype, PhysicalStructure
 from django.http import JsonResponse
 from .forms import RegistrationForm
 from .tokens import generate_token
@@ -25,8 +25,13 @@ from django.http import HttpResponse
 from reportlab.pdfgen import canvas
 from django.template.loader import get_template
 from xhtml2pdf import pisa
+from itertools import groupby
+from operator import attrgetter
+from collections import defaultdict
 import io
 
+from channels.generic.websocket import AsyncWebsocketConsumer
+import json
 
 #Ankon's imports
 import tensorflow as tf
@@ -1050,3 +1055,53 @@ def searchbar_from_advance_search(request):
     print(found_by_uploader_case_records)
     form = FilterForm()
     return render(request, 'search_page_user.html', {'user': user_profile , 'form': form,'results':found_by_uploader_case_records})
+
+def save_marker(request):
+    if request.method == 'POST':
+        latitude = request.POST.get('latitude')
+        longitude = request.POST.get('longitude')
+        location_name = request.POST.get('location_name')
+        user = request.POST.get('user_id')
+        user_profile = get_object_or_404(UserProfile, id=user)
+        map = MapMarker(name = location_name, latitude =  latitude, longitude =  longitude)
+        map.save()
+        maps=[map]
+        existing_emergency = EMERGENCY.objects.filter(sender=user_profile).first()
+        if existing_emergency:
+            existing_emergency.emergency_location.add(*maps)
+            existing_emergency.save()
+            print("Location updated:", existing_emergency)
+        else:
+            emergency = EMERGENCY(sender=user_profile)
+            emergency.save()
+            emergency.emergency_location.add(*maps)
+            # new_book = Book(title=title)
+            # new_book.save()
+            # new_book.authors.add(*authors)
+            # print("New book created:", new_book)
+            # emergency = EMERGENCY(sender=user_profile, emergency_location=[map])
+            emergency.save()
+            print(user)
+
+        return JsonResponse({
+            'lat': latitude,
+        })
+    
+def group_emerg_by_user(emergencies):
+    dict_user_emergencies = defaultdict(list)
+    for emergency in emergencies:
+        for location in emergency.emergency_location.all():
+            dict_user_emergencies[emergency.sender].append((location.latitude, location.longitude))
+    return dict(dict_user_emergencies)    
+
+def emergency(request,admin_id):
+    userinfo = get_object_or_404(AdminProfile, id=admin_id)
+    emmergency = EMERGENCY.objects.all()
+
+    emer_want = group_emerg_by_user(emmergency)
+
+    emergencies = EMERGENCY.objects.all().order_by('sender', '-timestamp')
+    
+    grouped_emergencies = {key: list(group) for key, group in groupby(emergencies, key=attrgetter('sender'))}
+
+    return  render(request, 'emergency_req.html', {'user': userinfo, 'emer_want': emer_want, 'grouped_emergencies': grouped_emergencies})
