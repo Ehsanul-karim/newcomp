@@ -41,6 +41,7 @@
     {% block UserDetails %}
     <i class="fa fa-user me-sm-1"></i>
     <span class="d-sm-inline d-none">Admin</span>
+    <input type="text" id="the_logged_in_user" value="{{user.id}}">
     {% endblock %}
 
     {% block login-modelss %}
@@ -95,6 +96,10 @@
                             <button class="btn btn-success mb-0 viewMapRecord">
                                 Preview
                             </button>
+                            <button class="btn btn-danger mb-0 ReadDone">
+                              Done
+                          </button>
+
                         </div>
                     </div>
                 {% endfor %}
@@ -144,7 +149,26 @@
             $('#sidenav-main').fadeOut();
             $('#login-modal-sp').fadeIn().css("display", "flex");
         });
+
+
+        // new
+
+        
+
+        $('.ReadDone').click(function(){
+            // var markersData = JSON.parse($(this).data('markers'));
+          var card = $(this).closest('.card');
+          var victimName = card.find('.card-vic-name').text();
+
+          var hiddenUSERID1_no = document.getElementById('the_logged_in_user').value;
+          console.log(hiddenUSERID1_no)
+          let strr =   '/readDone/' + hiddenUSERID1_no + '/'+ victimName + '/';
+          window.location.href = strr;
+        });
+
+
     });
+
 
     
 
@@ -157,7 +181,9 @@
             markers.forEach(function(marker) {
                 L.marker(marker.latlng).addTo(map).bindPopup(marker.name);
             });
-        }
+        };
+
+
 </script>
 
     {% endblock %}

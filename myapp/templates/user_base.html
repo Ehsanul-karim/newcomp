@@ -115,7 +115,7 @@
                 <span class="nav-link-text ms-1">{% block sidebar_item3 %}{% endblock %}</span>
               </a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item">    
               <a class="nav-link {% block item_4 %}{% endblock %}" href="{% block sidevar_4 %}{% endblock %}">
                 <div class="icon icon-shape icon-sm shadow border-radius-md bg-white text-center me-2 d-flex align-items-center justify-content-center">
                   <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -133,7 +133,7 @@
                     </g>
                   </svg>
                 </div>
-                <span class="nav-link-text ms-1">{% block sidebar_item4 %}{% endblock %}</span>
+                <span class="nav-link-text ms-1">{% block sidebar_item4 %}{% endblock %} {% if emmergency.count != 0 %}<span  style="font-size:large;color: red;">*</span> {% endif %} </span>
               </a>
             </li>
             {% block sidebar_item5_details %}            

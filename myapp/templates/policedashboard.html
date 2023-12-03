@@ -121,6 +121,7 @@
                           {% elif case.case_status == 'Completed' %}
                             <span class="badge badge-sm bg-gradient-success">{{ case.case_status }}</span>
                           {% endif %}
+                          <input type="text" id="the_logged_in_user" value="{{ user.id }}" style="display: none;">
                         </td>
                         <td class="align-middle text-center">
                           <span class="text-secondary text-xs font-weight-bold">{{ case.occurance_date }} - {{ case.occurance_time }}</span>
@@ -149,5 +150,18 @@
     {% endblock %}
 
     {% block Scripts %}
+    <script>
+      
+    </script>
+
+    <script>
+      const filter_search = document.getElementById('filter_search_button');
+      filter_search.addEventListener('click', function () {
+        var hiddenUSERID1_no = document.getElementById('the_logged_in_user').value;
+        console.log(hiddenUSERID1_no)
+        let strr =   '/search_req_admin/' + hiddenUSERID1_no + '/';
+        window.location.href = strr;
+      });
+</script>
 
     {% endblock %}

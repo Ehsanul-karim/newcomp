@@ -47,26 +47,37 @@
   integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 {% endblock %}
 
-{% block ProfilerType %}User{% endblock %}
+
+{% block ProfilerType %}Admin{% endblock %}
 {% block Pagetitle %}Filter Search{% endblock %}
 
-{% block sidebar_item2 %}New FIR{% endblock %}
-{% block sidebar_item3 %}Application Request{% endblock %}
-{% block sidebar_item4 %}Live Chat{% endblock %}
-
+{% block dashboard_active %}{% endblock %}
 {% block sidevar_1 %}
-{% url 'UserHomePage' user.id %}
+{% url 'AdminHomePage' user.id %}
 {% endblock %}
+{% block sidebar_item2 %}New Arrest{% endblock %}
 {% block sidevar_2 %}
-{% url 'UseComplainPage1' user.id 0%}
+{% url 'ArrestPage' user.id %}
 {% endblock %}
+
+{% block sidebar_item3 %}Criminal Records{% endblock %}
+{% block sidevar_3 %}
+{% url 'CriminalPage' user.id %}
+{% endblock %}
+{% block sidebar_item4 %}Emergency{% endblock %}
+
+{% block sidevar_4 %}
+{% url 'emergency' user.id %}
+{% endblock %}
+
 {% block UserDetails %}
-<img
-  src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}{% static 'img/Comoon_People.webp' %}{% endif %}"
-  alt="" style="width: 50px; border-radius: 100%;">
-<span class="d-sm-inline d-none">{{ user.name }}</span>
-<input type="text" id="the_logged_in_user" value="{{ user.id }}" style="display: none;">
+<i class="fa fa-user me-sm-1"></i>
+<span class="d-sm-inline d-none">Admin</span>
 {% endblock %}
+
+
+
+
 
 
 {% block content %}
@@ -84,10 +95,36 @@
               </div>
               <form method="post" enctype="multipart/form-data">
                 <div class="row">
-                  <div class="col-md-2" style="padding:35px">
-                    {% csrf_token %}
-                    {{ form }}
-                  </div>
+                 <div class="col-md-2">
+                    <div class="row">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="fir_database" value="option1" checked>
+                            <label class="form-check-label" for="fir_database">
+                              FIR Database
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="criminal_database" value="option2">
+                            <label class="form-check-label" for="criminal_database">
+                              Criminal Database
+                            </label>
+                          </div>
+                    </div>
+                    <div class="row">
+                        <div style="padding:35px;" id="fir_box">
+                            {% csrf_token %}
+                            {{ form }}
+                            <li style="list-style-type: none;" >
+                                <label for="new_case_uploader_chk">Case Uploader</label>
+                                 <input type="checkbox" name="new_case_uploader_chk" id="new_case_uploader_chk" value="1">
+                            </li>
+                          </div>
+                          <div  id="criminal_box" style="padding:35px; display: none;">
+                            {% csrf_token %}
+                            {{ form_criminal }}
+                          </div>
+                    </div>
+                 </div>
                   <div class="col-md-10">
                     <div class="row mb-3" id="filter_box">
                       <div class="col-md-10">
@@ -96,7 +133,10 @@
                             <input type="text" class="form-control mb-2" style="display: none;" placeholder="Enter Search Terms" name="searchTerms"id="searchTerms">
                             <input type="number" class="form-control mb-2" style="display: none;" placeholder="Enter FIR number" name="searchcomplain"id="searchcomplain">
                             <input type="text" class="form-control mb-2" style="display: none;" placeholder="Enter Victim Name" name="searchvictim"id="searchvictim">
+                            <input type="number" class="form-control mb-2" style="display: none;" placeholder="Enter Case Uploader" name="case_uploader"id="case_uploader">
 
+                            <input type="text" class="form-control mb-2" style="display: none;" placeholder="Enter Criminal Name" name="criminal_name"id="criminal_name">
+                            <input type="number" class="form-control mb-2" style="display: none;" placeholder="Enter Criminal Phone" name="criminal_phone"id="criminal_phone">
 
                           </div>
                           <div class="col-md-2">
@@ -160,6 +200,7 @@
                         </div>
                       </div>
                     </div>
+                    {% if results %}
                     <div class="row" id="Output_Table">
                       <div class="card mb-4">
                         <div class="card-header pb-0">
@@ -167,6 +208,7 @@
                         </div>
                         <div class="card-body px-0 pt-0 pb-2">
                           <div class="table-responsive p-0">
+                            
                             <table class="table align-items-center mb-0" id="caseTable">
                               <thead>
                                 <tr>
@@ -223,7 +265,7 @@
                                     <span class="text-secondary text-xs font-weight-bold">{{ case.file_report_date }}</span>
                                   </td>
                                   <td class="align-middle">
-                                    <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
+                                    <a href="{% url 'firinfo' case.id user.id %}" class="text-secondary font-weight-bold text-xs"
                                       data-toggle="tooltip" data-original-title="Edit user">
                                       Details
                                     </a>
@@ -242,6 +284,66 @@
                         </div>
                       </div>
                     </div>
+                    {% endif %}
+                    {% if criminal_result %}
+                    <div class="row" id="Output_Table_2">
+                      <div class="card mb-4">
+                        <div class="card-header pb-0">
+                          <h6>Matched Criminals</h6>
+                        </div>
+                        <div class="card-body px-0 pt-0 pb-2">
+                          <div class="table-responsive p-0">
+                            <table class="table align-items-center mb-0" id="criminalTable">
+                              <thead>
+                                <tr>
+                                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
+                                    Criminal ID
+
+                                </th>
+                                  <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Criminal Name
+                                    </th>
+                                  <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
+                                    style="padding: 0px;">
+                                    Age
+                                    </th>
+                                  <th
+                                    class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
+                                    Previous Crimes</th>
+                                  <th class="text-secondary opacity-7"></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {% if criminal_result %}
+                                {% for criminal in criminal_result %}
+                                <tr>
+                                    <td style="text-align: center;">
+                                        <p class="text-xs font-weight-bold mb-0 criminal-id">{{ criminal.id }}</p>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex px-2">
+                                          <div>
+                                            <img src="{{ criminal.criminal_img.url }}" class="avatar avatar-sm rounded-circle me-2 criminal-img" alt="spotify">
+                                          </div>
+                                          <div class="my-auto">
+                                            <h6 class="mb-0 text-sm criminal-name">{{ criminal.criminal_name }}</h6>
+                                          </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                {% else %}
+                                <tr>
+                                  <p>No cases found.</p>
+                                </tr>
+                                {% endif %}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endif %}
                   </div>
                 </div>
               </form>
@@ -256,6 +358,28 @@
 
 {% block Scripts %}
 <script>
+
+        var firRadio = document.getElementById('fir_database');
+        var criminalRadio = document.getElementById('criminal_database');
+        var firBox = document.getElementById('fir_box');
+        var criminalBox = document.getElementById('criminal_box');
+
+        function toggleVisibility() {
+            if (firRadio.checked) {
+                firBox.style.display = 'block';
+                criminalBox.style.display = 'none';
+            } else if (criminalRadio.checked) {
+                firBox.style.display = 'none';
+                criminalBox.style.display = 'block';
+            }
+        }
+
+        toggleVisibility();
+
+        firRadio.addEventListener('change', toggleVisibility);
+        criminalRadio.addEventListener('change', toggleVisibility);
+
+
   document.getElementById("id_submissiondate").addEventListener("click", function () {
     var dateBox = document.getElementById("date_box");
     dateBox.style.display = this.checked ? "block" : "none";
@@ -283,6 +407,27 @@
     var dateBox = document.getElementById("case_type");
     dateBox.style.display = this.checked ? "block" : "none";
   });
+  document.getElementById("new_case_uploader_chk").addEventListener("click", function () {
+    var dateBox = document.getElementById("case_uploader");
+    dateBox.style.display = this.checked ? "block" : "none";
+  });
+
+  document.getElementById("id_criminal_name").addEventListener("click", function () {
+    var dateBox = document.getElementById("criminal_name");
+    dateBox.style.display = this.checked ? "block" : "none";
+  });
+
+  document.getElementById("id_criminal_phone").addEventListener("click", function () {
+    var dateBox = document.getElementById("criminal_phone");
+    dateBox.style.display = this.checked ? "block" : "none";
+  });
+
+
+
+  
+  
+
+  
 </script>
 
 {% endblock %}

@@ -1,5 +1,5 @@
 from django import forms
-from .models import UserProfile
+from .models import UserProfile,AdminProfile
 
 class RegistrationForm(forms.ModelForm):
     class Meta:
@@ -8,10 +8,13 @@ class RegistrationForm(forms.ModelForm):
 
 
 class FilterForm(forms.Form):
-    anyfield = forms.BooleanField(required=False)
     firnumber = forms.BooleanField(required=False)
     victim_name = forms.BooleanField(required=False)
     submissiondate = forms.BooleanField(required=False)
     occurance_date = forms.BooleanField(required=False)
     crimeType = forms.BooleanField(required=False)
     status = forms.BooleanField(required=False)
+
+class Criminal_FilterForm(forms.Form):
+    criminal_name= forms.BooleanField(required=False)
+    criminal_phone= forms.BooleanField(required=False)

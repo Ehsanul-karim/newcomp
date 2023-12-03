@@ -17,7 +17,7 @@ from .forms import RegistrationForm
 from .tokens import generate_token
 from django.urls import reverse
 from django.views.generic import TemplateView
-from .forms import FilterForm
+from .forms import FilterForm, Criminal_FilterForm
 import datetime
 import os
 from django.template.defaultfilters import time
@@ -301,7 +301,8 @@ def AdminHomePage(request,user_id):
         )
     except CASE_FIR.DoesNotExist:
         case_records = None
-    return  render(request, 'policedashboard.html', {'user': userinfo, 'case_records': case_records})
+    emmergency = EMERGENCY.objects.all()
+    return  render(request, 'policedashboard.html', {'user': userinfo, 'case_records': case_records,'emmergency':emmergency})
 
 
 
@@ -989,11 +990,16 @@ def goto_search_page(request,user_id):
         form = FilterForm(request.POST)
         if form.is_valid():
             selected_fields = [field for field, value in form.cleaned_data.items() if value]
-            text = request.POST.get('searchTerms')
             from_date = request.POST.get('from_date')
             to_date = request.POST.get('to_date')
             occ_from_date =  request.POST.get('occ_from_date')
             occ_to_date = request.POST.get('occ_to_date')
+
+            searchcomplain = request.POST.get('searchcomplain')
+            searchvictim = request.POST.get('searchvictim')
+            case_type = request.POST.get('new_case_type')
+            print(searchcomplain)
+            
 
             statusofCase = request.POST.get('statusofCase')
             print(from_date)
@@ -1001,11 +1007,11 @@ def goto_search_page(request,user_id):
             user_profile = get_object_or_404(UserProfile, id=user_id)
             found_by_uploader_case_records = CASE_FIR.objects.filter(case_uploader=user_profile)
             if 'firnumber' in selected_fields:
-                integer = int(text)
+                integer = int(searchcomplain)
                 temp = found_by_uploader_case_records.filter(id = integer)
                 found_by_uploader_case_records = temp
             if 'victim_name' in selected_fields:
-                temporary = victimInfo.objects.filter(name__icontains=text)
+                temporary = victimInfo.objects.filter(name__icontains=searchvictim)
                 index = 0
                 temp = found_by_uploader_case_records.filter(victim_name = temporary[index])
                 index += 1
@@ -1020,7 +1026,8 @@ def goto_search_page(request,user_id):
                 temp = found_by_uploader_case_records.filter(occurance_date__range=(occ_from_date, occ_to_date))
                 found_by_uploader_case_records = temp
             if 'crimeType' in selected_fields:
-                crime_type = Crimetype.objects.filter(crime_name__icontains=text)
+                print(case_type)
+                crime_type = Crimetype.objects.get(crime_name=case_type)
                 temp = found_by_uploader_case_records.filter(crime_type = crime_type)
                 found_by_uploader_case_records = temp
             if 'status' in selected_fields:
@@ -1028,10 +1035,12 @@ def goto_search_page(request,user_id):
                 found_by_uploader_case_records = temp
             userinfo = get_object_or_404(UserProfile, id=user_id)
             form = FilterForm()
-            return render(request, 'search_page_user.html', {'user': userinfo , 'form': form,'results':found_by_uploader_case_records})
+            case_types = Crimetype.objects.all()
+            return render(request, 'search_page_user.html', {'user': userinfo , 'case_types':case_types, 'form': form,'results':found_by_uploader_case_records})
     userinfo = get_object_or_404(UserProfile, id=user_id)
+    case_types = Crimetype.objects.all()
     form = FilterForm()
-    return render(request, 'search_page_user.html', {'user': userinfo , 'form': form})
+    return render(request, 'search_page_user.html', {'user': userinfo ,'case_types':case_types, 'form': form})
     
 def searchbar_from_advance_search(request):
     search_term = request.GET.get('search_term')
@@ -1054,7 +1063,8 @@ def searchbar_from_advance_search(request):
         })
     print(found_by_uploader_case_records)
     form = FilterForm()
-    return render(request, 'search_page_user.html', {'user': user_profile , 'form': form,'results':found_by_uploader_case_records})
+    case_types = Crimetype.objects.all()
+    return render(request, 'search_page_user.html', {'user': user_profile ,'case_types':case_types, 'form': form,'results':found_by_uploader_case_records})
 
 def save_marker(request):
     if request.method == 'POST':
@@ -1097,7 +1107,6 @@ def group_emerg_by_user(emergencies):
 def emergency(request,admin_id):
     userinfo = get_object_or_404(AdminProfile, id=admin_id)
     emmergency = EMERGENCY.objects.all()
-
     emer_want = group_emerg_by_user(emmergency)
 
     emergencies = EMERGENCY.objects.all().order_by('sender', '-timestamp')
@@ -1105,3 +1114,93 @@ def emergency(request,admin_id):
     grouped_emergencies = {key: list(group) for key, group in groupby(emergencies, key=attrgetter('sender'))}
 
     return  render(request, 'emergency_req.html', {'user': userinfo, 'emer_want': emer_want, 'grouped_emergencies': grouped_emergencies})
+
+def goto_admin_search_page(request,admin_id):
+    if request.method == 'POST':
+        form = FilterForm(request.POST)
+        form2 = Criminal_FilterForm(request.POST)
+        if form.is_valid():
+            selected_fields = [field for field, value in form.cleaned_data.items() if value]
+            from_date = request.POST.get('from_date')
+            to_date = request.POST.get('to_date')
+            occ_from_date =  request.POST.get('occ_from_date')
+            occ_to_date = request.POST.get('occ_to_date')
+            new_case_uploader = request.POST.get('case_uploader')
+            try:
+                uploader_enable = request.POST['new_case_uploader_chk']
+            except:
+                uploader_enable = 0
+            
+
+            searchcomplain = request.POST.get('searchcomplain')
+            searchvictim = request.POST.get('searchvictim')
+            case_type = request.POST.get('new_case_type')
+            print(searchcomplain)
+            
+
+            statusofCase = request.POST.get('statusofCase')
+            print(from_date)
+            print(to_date)
+            found_by_uploader_case_records = CASE_FIR.objects.all()
+            if 'firnumber' in selected_fields:
+                integer = int(searchcomplain)
+                temp = found_by_uploader_case_records.filter(id = integer)
+                found_by_uploader_case_records = temp
+            if 'victim_name' in selected_fields:
+                temporary = victimInfo.objects.filter(name__icontains=searchvictim)
+                index = 0
+                temp = found_by_uploader_case_records.filter(victim_name = temporary[index])
+                index += 1
+                while index < len(temporary):
+                    temp = temp | found_by_uploader_case_records.filter(victim_name = temporary[index])
+                    index += 1
+                found_by_uploader_case_records = temp
+            if 'submissiondate' in selected_fields:
+                temp = found_by_uploader_case_records.filter(file_report_date__range=(from_date, to_date))
+                found_by_uploader_case_records = temp
+            if 'occurance_date' in selected_fields:
+                temp = found_by_uploader_case_records.filter(occurance_date__range=(occ_from_date, occ_to_date))
+                found_by_uploader_case_records = temp
+            if 'crimeType' in selected_fields:
+                print(case_type)
+                crime_type = Crimetype.objects.get(crime_name=case_type)
+                temp = found_by_uploader_case_records.filter(crime_type = crime_type)
+                found_by_uploader_case_records = temp
+            if 'status' in selected_fields:
+                temp = found_by_uploader_case_records.filter(case_status = statusofCase)
+                found_by_uploader_case_records = temp
+            if uploader_enable == '1':
+                user_profile_exists = UserProfile.objects.filter(id=new_case_uploader).exists()
+                if user_profile_exists:
+                    uploader = UserProfile.objects.get(id=new_case_uploader)
+                    temp = found_by_uploader_case_records.filter(case_uploader = uploader)
+                    found_by_uploader_case_records = temp
+            userinfo = get_object_or_404(AdminProfile, id=admin_id)
+            form = FilterForm()
+            form_criminal = Criminal_FilterForm()
+            case_types = Crimetype.objects.all()
+            #return render(request, 'search_page_police.html', {'user': userinfo , 'case_types':case_types,'form_criminal':form_criminal, 'form': form,'results':found_by_uploader_case_records})   
+        if form2.is_valid():
+            found_by_criminal_records = CriminalProfile.objects.all()
+            selected_fields2 = [field for field, value in form2.cleaned_data.items() if value]
+            criminal_name = request.POST.get('criminal_name')
+            criminal_phone = request.POST.get('criminal_phone')
+            userinfo = get_object_or_404(AdminProfile, id=admin_id)
+            if 'criminal_name' in selected_fields2:
+                temp = found_by_criminal_records.filter(criminal_name = criminal_name)
+                found_by_criminal_records = temp
+            if 'criminal_phone' in selected_fields2:
+                integer = int(searchcomplain)
+                temp = found_by_criminal_records.filter(criminal_phone = criminal_phone)
+                found_by_criminal_records = temp
+            form = FilterForm()
+            form_criminal = Criminal_FilterForm()
+            case_types = Crimetype.objects.all()
+            #return render(request, 'search_page_police.html', {'user': userinfo , 'case_types':case_types, 'form': form,'form_criminal':form_criminal,'criminal_result':found_by_criminal_records})        
+        return render(request, 'search_page_police.html', {'user': userinfo , 'case_types':case_types,'form_criminal':form_criminal, 'form': form,'results':found_by_uploader_case_records,'criminal_result':found_by_criminal_records})   
+        
+    userinfo = get_object_or_404(AdminProfile, id=admin_id)
+    case_types = Crimetype.objects.all()
+    form = FilterForm()
+    form_criminal = Criminal_FilterForm()
+    return render(request, 'search_page_police.html', {'user': userinfo ,'case_types':case_types, 'form': form,'form_criminal':form_criminal})

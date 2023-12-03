@@ -34,6 +34,7 @@ urlpatterns = [
     path('page5Fir/<int:user_id>/<int:fir_id>',views.page5Fir, name="page5Fir"),
     path('backtohome/<int:criminal_id>/<int:user_id>', views.backtohome, name="backtohome"),
     path('search_req_user/<int:user_id>/', views.goto_search_page, name = "Search_Page"),
+    path('search_req_admin/<int:admin_id>/', views.goto_admin_search_page, name = "goto_admin_search_page"),
     #path('map/', MapView.as_view(), name='map-view'),
 
     path('map/', views.context_date, name='map-view'),
